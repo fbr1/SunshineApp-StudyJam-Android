@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">Sunshine</string>
+    <string name="app_name">SunshineApp</string>
+    <string name="btn_search">Ver clima</string>
+    <string name="tvCity">Ingrese Ciudad</string>
 </resources>

@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file:///run/media/fbr1/GamesAndDocs/fbr1/Documents/Repositories/SunshineApp-StudyJam-Android/SunshineApp-StudyJam-Android.iml" filepath="/run/media/fbr1/GamesAndDocs/fbr1/Documents/Repositories/SunshineApp-StudyJam-Android/SunshineApp-StudyJam-Android.iml" />
-      <module fileurl="file:///run/media/fbr1/GamesAndDocs/fbr1/Documents/Repositories/SunshineApp-StudyJam-Android/app/app.iml" filepath="/run/media/fbr1/GamesAndDocs/fbr1/Documents/Repositories/SunshineApp-StudyJam-Android/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SunshineApp-StudyJam-Android.iml" filepath="$PROJECT_DIR$/SunshineApp-StudyJam-Android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
 </project>
