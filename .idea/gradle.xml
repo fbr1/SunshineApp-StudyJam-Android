@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="GradleSettings">
+    <option name="linkedExternalProjectsSettings">
+      <GradleProjectSettings>
+        <option name="distributionType" value="DEFAULT_WRAPPED" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="modules">
+          <set>
+            <option value="/run/media/fbr1/GamesAndDocs/fbr1/Documents/Repositories/SunshineApp-StudyJam-Android" />
+            <option value="/run/media/fbr1/GamesAndDocs/fbr1/Documents/Repositories/SunshineApp-StudyJam-Android/app" />
+          </set>
+        </option>
+        <option name="myModules">
+          <set>
+            <option value="/run/media/fbr1/GamesAndDocs/fbr1/Documents/Repositories/SunshineApp-StudyJam-Android" />
+            <option value="/run/media/fbr1/GamesAndDocs/fbr1/Documents/Repositories/SunshineApp-StudyJam-Android/app" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+    </option>
+  </component>
+</project>
