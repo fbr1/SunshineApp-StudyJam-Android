@@ -2,4 +2,7 @@
     <string name="app_name">SunshineApp</string>
     <string name="btn_search">Ver clima</string>
     <string name="tvCity">Ingrese Ciudad</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
