@@ -16,12 +16,12 @@ import java.util.List;
  * specified {@link OnListFragmentInteractionListener}.
  * TODO: Replace the implementation with code for your data type.
  */
-public class MyDayForecastEntityRecyclerViewAdapter extends RecyclerView.Adapter<MyDayForecastEntityRecyclerViewAdapter.ViewHolder> {
+public class MyDayForecastRecyclerViewAdapter extends RecyclerView.Adapter<MyDayForecastRecyclerViewAdapter.ViewHolder> {
 
     private final List<DummyItem> mValues;
     private final OnListFragmentInteractionListener mListener;
 
-    public MyDayForecastEntityRecyclerViewAdapter(List<DummyItem> items, OnListFragmentInteractionListener listener) {
+    public MyDayForecastRecyclerViewAdapter(List<DummyItem> items, OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }

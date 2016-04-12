@@ -67,7 +67,7 @@ public class ForecastFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MyDayForecastEntityRecyclerViewAdapter(DummyContent.ITEMS, mListener));
+            recyclerView.setAdapter(new MyDayForecastRecyclerViewAdapter(DummyContent.ITEMS, mListener));
         }
         return view;
     }
