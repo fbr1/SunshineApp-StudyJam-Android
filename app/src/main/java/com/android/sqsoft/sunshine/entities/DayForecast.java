@@ -1,50 +1,42 @@
 package com.android.sqsoft.sunshine.entities;
 
+import com.google.gson.annotations.SerializedName;
+
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Pedro on 10/04/2016.
  */
 public class DayForecast extends Entity {
+
+    @SerializedName("dt")
     private Date date;
-    private String description;
-    private int weather_id;
+
     private double tmin;
     private double tmax;
     private double humidity;
     private double pressure;
+    private List<Weather> weather = new ArrayList<>();
+
+    @SerializedName("speed")
     private double wind;
+
+    @SerializedName("deg")
     private double windDir;
+
     private double clouds;
+    private double rain;
     private Date sunset;
     private Date sunrise;
-    private double rain;
 
-
-
-    //getters and setters
     public Date getDate() {
         return date;
     }
 
     public void setDate(Date date) {
         this.date = date;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public int getWeather_id() {
-        return weather_id;
-    }
-
-    public void setWeather_id(int weather_id) {
-        this.weather_id = weather_id;
     }
 
     public double getTmin() {
@@ -79,6 +71,14 @@ public class DayForecast extends Entity {
         this.pressure = pressure;
     }
 
+    public List<Weather> getWeather() {
+        return weather;
+    }
+
+    public void setWeather(List<Weather> weather) {
+        this.weather = weather;
+    }
+
     public double getWind() {
         return wind;
     }
@@ -103,6 +103,14 @@ public class DayForecast extends Entity {
         this.clouds = clouds;
     }
 
+    public double getRain() {
+        return rain;
+    }
+
+    public void setRain(double rain) {
+        this.rain = rain;
+    }
+
     public Date getSunset() {
         return sunset;
     }
@@ -118,14 +126,4 @@ public class DayForecast extends Entity {
     public void setSunrise(Date sunrise) {
         this.sunrise = sunrise;
     }
-
-    public double getRain() {
-        return rain;
-    }
-
-    public void setRain(double rain) {
-        this.rain = rain;
-    }
-
-
 }

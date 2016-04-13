@@ -7,21 +7,20 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.android.sqsoft.sunshine.ForecastFragment.OnListFragmentInteractionListener;
-import com.android.sqsoft.sunshine.dummy.DummyContent.DummyItem;
+import com.android.sqsoft.sunshine.entities.DayForecast;
 
 import java.util.List;
 
 /**
- * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
+ * {@link RecyclerView.Adapter} that can display a {@link DayForecast} and makes a call to the
  * specified {@link OnListFragmentInteractionListener}.
- * TODO: Replace the implementation with code for your data type.
  */
-public class MyDayForecastRecyclerViewAdapter extends RecyclerView.Adapter<MyDayForecastRecyclerViewAdapter.ViewHolder> {
+public class DayForecastRecyclerViewAdapter extends RecyclerView.Adapter<DayForecastRecyclerViewAdapter.ViewHolder> {
 
-    private final List<DummyItem> mValues;
+    private final List<DayForecast> mValues;
     private final OnListFragmentInteractionListener mListener;
 
-    public MyDayForecastRecyclerViewAdapter(List<DummyItem> items, OnListFragmentInteractionListener listener) {
+    public DayForecastRecyclerViewAdapter(List<DayForecast> items, OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }
@@ -36,8 +35,8 @@ public class MyDayForecastRecyclerViewAdapter extends RecyclerView.Adapter<MyDay
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).id);
-        holder.mContentView.setText(mValues.get(position).content);
+        holder.mIdView.setText((mValues.get(position)).getDate().toString());
+        holder.mContentView.setText(String.valueOf((mValues.get(position)).getTmax()));
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,7 +59,7 @@ public class MyDayForecastRecyclerViewAdapter extends RecyclerView.Adapter<MyDay
         public final View mView;
         public final TextView mIdView;
         public final TextView mContentView;
-        public DummyItem mItem;
+        public DayForecast mItem;
 
         public ViewHolder(View view) {
             super(view);

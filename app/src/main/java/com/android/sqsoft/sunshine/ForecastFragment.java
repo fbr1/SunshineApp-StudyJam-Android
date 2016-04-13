@@ -6,12 +6,16 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.android.sqsoft.sunshine.dummy.DummyContent;
-import com.android.sqsoft.sunshine.dummy.DummyContent.DummyItem;
+import com.android.sqsoft.sunshine.entities.DayForecast;
+import com.android.sqsoft.sunshine.logic.ForecastLogic;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A fragment representing a list of Items.
@@ -21,10 +25,13 @@ import com.android.sqsoft.sunshine.dummy.DummyContent.DummyItem;
  */
 public class ForecastFragment extends Fragment {
 
+    private static final String TAG = ForecastFragment.class.getSimpleName();
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
     // TODO: Customize parameters
     private int mColumnCount = 1;
+    RecyclerView recyclerView;
+    private List<DayForecast> forecastList = new ArrayList<>();
     private OnListFragmentInteractionListener mListener;
 
     /**
@@ -61,13 +68,27 @@ public class ForecastFragment extends Fragment {
         // Set the adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
+            recyclerView = (RecyclerView) view;
             if (mColumnCount <= 1) {
                 recyclerView.setLayoutManager(new LinearLayoutManager(context));
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MyDayForecastRecyclerViewAdapter(DummyContent.ITEMS, mListener));
+            // Get data
+            ForecastLogic.getInstance().getExtendedWeather(new ForecastLogic.ForecastListener<ArrayList<DayForecast>>(){
+
+                @Override
+                public void onResult(ArrayList<DayForecast> fl) {
+
+                    if(fl != null){
+                        forecastList = fl;
+                        recyclerView.setAdapter(new DayForecastRecyclerViewAdapter(forecastList, mListener));
+                    }else{
+                        Log.d(TAG, "Warning: forecastList is empty");
+                    }
+                }
+            });
+
         }
         return view;
     }
@@ -102,6 +123,6 @@ public class ForecastFragment extends Fragment {
      */
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onListFragmentInteraction(DummyItem item);
+        void onListFragmentInteraction(DayForecast item);
     }
 }
