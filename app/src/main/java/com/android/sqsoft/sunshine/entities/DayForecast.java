@@ -11,21 +11,16 @@ import java.util.List;
  */
 public class DayForecast extends Entity {
 
-    @SerializedName("dt")
-    private Date date;
 
+    private Date date;
+    private double currentTemp;
     private double tmin;
     private double tmax;
     private double humidity;
     private double pressure;
     private List<Weather> weather = new ArrayList<>();
-
-    @SerializedName("speed")
-    private double wind;
-
-    @SerializedName("deg")
+    private double windSpeed;
     private double windDir;
-
     private double clouds;
     private double rain;
     private Date sunset;
@@ -79,12 +74,12 @@ public class DayForecast extends Entity {
         this.weather = weather;
     }
 
-    public double getWind() {
-        return wind;
+    public double getWindSpeed() {
+        return windSpeed;
     }
 
-    public void setWind(double wind) {
-        this.wind = wind;
+    public void setWindSpeed(double wind) {
+        this.windSpeed = wind;
     }
 
     public double getWindDir() {
@@ -125,5 +120,13 @@ public class DayForecast extends Entity {
 
     public void setSunrise(Date sunrise) {
         this.sunrise = sunrise;
+    }
+
+    public double getCurrentTemp() {
+        return currentTemp;
+    }
+
+    public void setCurrentTemp(double currentTemp) {
+        this.currentTemp = currentTemp;
     }
 }

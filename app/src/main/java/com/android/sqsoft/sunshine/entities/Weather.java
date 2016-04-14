@@ -6,7 +6,7 @@ package com.android.sqsoft.sunshine.entities;
 public class Weather extends Entity{
 
     private int id;
-    private String main;
+    private String name;
     private String description;
 
     public int getId() {
@@ -17,12 +17,12 @@ public class Weather extends Entity{
         this.id = id;
     }
 
-    public String getMain() {
-        return main;
+    public String getName() {
+        return name;
     }
 
-    public void setMain(String main) {
-        this.main = main;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getDescription() {
