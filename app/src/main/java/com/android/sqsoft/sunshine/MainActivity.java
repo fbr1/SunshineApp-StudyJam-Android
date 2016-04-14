@@ -12,7 +12,7 @@ public class MainActivity extends AppCompatActivity implements ForecastFragment.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        ForecastLogic.getInstance(this);
+        ForecastLogic.initializeInstance(this);
 
         setContentView(R.layout.activity_main);
     }

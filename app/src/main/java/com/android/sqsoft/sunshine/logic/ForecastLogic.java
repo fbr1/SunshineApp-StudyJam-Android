@@ -102,11 +102,10 @@ public class ForecastLogic {
 
     private ForecastLogic(Context context) {
         this.context = context;
-
         requestQueue = getRequestQueue();
     }
 
-    public synchronized static ForecastLogic getInstance(Context context){
+    public synchronized static ForecastLogic initializeInstance(Context context){
         if(forecastLogic == null){
             forecastLogic = new ForecastLogic(context);
         }
@@ -117,7 +116,7 @@ public class ForecastLogic {
     public synchronized static ForecastLogic getInstance(){
         if(forecastLogic == null){
             throw new IllegalStateException(TAG +
-                    " is not initialized, call getInstance(...) first");
+                    " is not initialized, call initializeInstance(...) first");
         }
         return forecastLogic;
     }
