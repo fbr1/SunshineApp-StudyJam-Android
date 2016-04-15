@@ -1,4 +1,4 @@
-package com.android.sqsoft.sunshine;
+package com.android.sqsoft.sunshine.adapters;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.android.sqsoft.sunshine.ForecastFragment.OnListFragmentInteractionListener;
+import com.android.sqsoft.sunshine.R;
 import com.android.sqsoft.sunshine.entities.DayForecast;
 
 import java.util.List;

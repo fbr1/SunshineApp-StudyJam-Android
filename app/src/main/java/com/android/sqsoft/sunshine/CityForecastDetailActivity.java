@@ -2,18 +2,12 @@ package com.android.sqsoft.sunshine;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
 
-public class SearchCityActivity extends AppCompatActivity {
+public class CityForecastDetailActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_searchcity);
-    }
-
-
-    public void mostrarPronostico(View view) {
-
+        setContentView(R.layout.activity_city_forecast_detail);
     }
 }
