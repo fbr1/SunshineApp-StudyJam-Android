@@ -13,4 +13,17 @@
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
+    <EditText
+        android:id="@+id/etCity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/activity_vertical_margin"
+        android:hint="Ingrese Ciudad"/>
+    <Button
+        android:id="@+id/btnForecast"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_pronostico"
+        android:layout_gravity="center"
+        android:onClick="onBtnForecastClicked"/>
 </LinearLayout>

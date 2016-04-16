@@ -17,8 +17,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SearchCityActivity" />
-        <activity android:name=".CityForecastDetailActivity"></activity>
+        <activity android:name=".CityForecastActivity" />
+        <activity android:name=".CityForecastDetailActivity"/>
     </application>
 
 </manifest>

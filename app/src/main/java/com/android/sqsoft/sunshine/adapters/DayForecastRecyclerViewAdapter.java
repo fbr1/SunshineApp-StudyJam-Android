@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.android.sqsoft.sunshine.ForecastFragment.OnListFragmentInteractionListener;
@@ -29,7 +30,7 @@ public class DayForecastRecyclerViewAdapter extends RecyclerView.Adapter<DayFore
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_main, parent, false);
+                .inflate(R.layout.fragment_forecast, parent, false);
         return new ViewHolder(view);
     }
 
@@ -65,8 +66,8 @@ public class DayForecastRecyclerViewAdapter extends RecyclerView.Adapter<DayFore
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mIdView = (TextView) view.findViewById(R.id.id);
-            mContentView = (TextView) view.findViewById(R.id.content);
+            mIdView = (TextView) view.findViewById(R.id.etCity);
+            mContentView = (TextView) view.findViewById(R.id.etCity);
         }
 
         @Override

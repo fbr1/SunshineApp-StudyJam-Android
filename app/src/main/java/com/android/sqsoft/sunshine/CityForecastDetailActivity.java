@@ -8,6 +8,6 @@ public class CityForecastDetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_city_forecast_detail);
+        setContentView(R.layout.activity_forecast_city_detail);
     }
 }

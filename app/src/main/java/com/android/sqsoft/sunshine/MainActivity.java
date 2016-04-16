@@ -1,15 +1,20 @@
 package com.android.sqsoft.sunshine;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.android.sqsoft.sunshine.entities.DayForecast;
 import com.android.sqsoft.sunshine.logic.ForecastLogic;
 
 public class MainActivity extends AppCompatActivity implements ForecastFragment.OnListFragmentInteractionListener {
+    public final static String EXTRA_MESSAGE = "com.android.sqsoft.sunshine.CITY";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,5 +50,14 @@ public class MainActivity extends AppCompatActivity implements ForecastFragment.
     @Override
     public void onListFragmentInteraction(DayForecast item) {
 
+    }
+
+    public void onBtnForecastClicked(View view) {
+        String cityText = ((EditText) findViewById(R.id.etCity)).getText().toString();
+        Toast.makeText(getApplicationContext(), "Boton apretado", Toast.LENGTH_LONG).show();
+
+        Intent intent = new Intent(this, CityForecastActivity.class);
+        intent.putExtra(EXTRA_MESSAGE, cityText);
+        startActivity(intent);
     }
 }
