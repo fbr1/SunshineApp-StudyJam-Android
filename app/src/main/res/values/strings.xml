@@ -7,4 +7,12 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="action_settings">Settings</string>
     <string name="btn_pronostico">Pronóstico</string>
+
+    <!-- Shared Preferences Variables Names -->
+    <string name="saved_location">location</string>
+    <string name="saved_location_status">location_status</string>
+
+    <!-- Shared Preferences Default Values -->
+    <string name="saved_location_default">London</string>
+
 </resources>

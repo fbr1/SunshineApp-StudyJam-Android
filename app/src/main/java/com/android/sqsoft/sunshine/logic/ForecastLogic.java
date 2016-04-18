@@ -137,7 +137,11 @@ public class ForecastLogic {
         dayForecast.setWindSpeed(jsonObject.getDouble("speed"));
         dayForecast.setWindDir(jsonObject.getDouble("deg"));
         dayForecast.setClouds(jsonObject.getDouble("clouds"));
-        dayForecast.setRain(jsonObject.getDouble("rain"));
+
+        // If rain filed isn't missing
+        if(jsonObject.isNull("rain") == false){
+            dayForecast.setRain(jsonObject.getDouble("rain"));
+        }
 
         return dayForecast;
     }
