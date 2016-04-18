@@ -14,5 +14,6 @@
 
     <!-- Shared Preferences Default Values -->
     <string name="saved_location_default">London</string>
+    <string name="day_forecast_for_intent_key">dayForecastItem</string>
 
 </resources>

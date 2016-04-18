@@ -1,5 +1,7 @@
 package com.android.sqsoft.sunshine.entities;
 
+import java.io.Serializable;
+
 /**
  * Created by fbr1 on 13/04/16.
  */

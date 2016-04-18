@@ -25,7 +25,7 @@ import java.util.List;
 /**
  * Created by Pedro on 11/04/2016.
  */
-public class ForecastLogic {
+public class ForecastLogic extends Logic{
 
     private static final String TAG = ForecastLogic.class.getSimpleName();
     private static final String OPENWEATHER_API_KEY = BuildConfig.OPEN_WEATHER_API_KEY;
@@ -39,10 +39,9 @@ public class ForecastLogic {
             OPENWEATHER_UNIT + "&appid=" + OPENWEATHER_API_KEY;
 
     private static ForecastLogic forecastLogic = null;
-    private final Context context;
-    public RequestQueue requestQueue;
 
-    public void getExtendedWeather(final ForecastListener listener,String location) {
+
+    public void getExtendedWeather(final Listener listener,String location) {
 
         // TODO get city from sharedPreferences
         String url = OPENWEATHER_DAILY_URL + "&q="+ location;
@@ -70,7 +69,7 @@ public class ForecastLogic {
         addToRequestQueue(jsObjRequest);
     }
 
-    public void getCurrentWeather(final ForecastListener listener) {
+    public void getCurrentWeather(final Listener listener) {
         // TODO remove hardcoded city
         String url = OPENWEATHER_CURRENT_URL + "&q=London";
 
@@ -204,7 +203,7 @@ public class ForecastLogic {
     }
 
     private ForecastLogic(Context context) {
-        this.context = context;
+        super(context);
         requestQueue = getRequestQueue();
     }
 
@@ -224,18 +223,7 @@ public class ForecastLogic {
         return forecastLogic;
     }
 
-    private RequestQueue getRequestQueue() {
-        if (requestQueue == null) {
-            requestQueue = Volley.newRequestQueue(context.getApplicationContext());
-        }
-        return requestQueue;
-    }
 
-    public <T> void addToRequestQueue(Request<T> req) {
-        getRequestQueue().add(req);
-    }
 
-    public interface ForecastListener<T> {
-        void onResult(T object);
-    }
+
 }

@@ -67,6 +67,7 @@ public class ForecastFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_forecast_list, container, false);
 
+
         // Set the adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
@@ -77,7 +78,7 @@ public class ForecastFragment extends Fragment {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
             // Get data
-            ForecastLogic.getInstance().getExtendedWeather(new ForecastLogic.ForecastListener<ArrayList<DayForecast>>(){
+            ForecastLogic.getInstance().getExtendedWeather(new ForecastLogic.Listener<ArrayList<DayForecast>>(){
 
                 @Override
                 public void onResult(ArrayList<DayForecast> fl) {
