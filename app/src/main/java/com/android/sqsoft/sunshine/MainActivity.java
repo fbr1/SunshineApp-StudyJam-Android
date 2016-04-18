@@ -23,8 +23,6 @@ import com.android.sqsoft.sunshine.entities.DayForecast;
 import com.android.sqsoft.sunshine.logic.ForecastLogic;
 
 public class MainActivity extends AppCompatActivity {
-    public final static String EXTRA_MESSAGE = "com.android.sqsoft.sunshine.CITY";
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
         if(isLocationSet() == true){
             Intent intent = new Intent(this, CityForecastActivity.class);
-            intent.putExtra(EXTRA_MESSAGE, getLocation());
+            intent.putExtra(CityForecastActivity.EXTRA_MESSAGE, getLocation());
             startActivity(intent);
         }else{
             setContentView(R.layout.activity_main);
@@ -54,10 +52,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void onBtnForecastClicked(View view) {
         String cityText = ((EditText) findViewById(R.id.etCity)).getText().toString();
-        Toast.makeText(getApplicationContext(), getLocation(), Toast.LENGTH_LONG).show();
 
         Intent intent = new Intent(this, CityForecastActivity.class);
-        intent.putExtra(EXTRA_MESSAGE, cityText);
+        intent.putExtra(CityForecastActivity.EXTRA_MESSAGE, cityText);
         startActivity(intent);
     }
 

@@ -34,6 +34,7 @@ public class ForecastFragment extends Fragment {
     RecyclerView recyclerView;
     private List<DayForecast> forecastList = new ArrayList<>();
     private OnListFragmentInteractionListener mListener;
+    private String location;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -64,7 +65,7 @@ public class ForecastFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_forecast, container, false);
+        View view = inflater.inflate(R.layout.fragment_forecast_list, container, false);
 
         // Set the adapter
         if (view instanceof RecyclerView) {
@@ -88,10 +89,14 @@ public class ForecastFragment extends Fragment {
                         Log.d(TAG, "Warning: forecastList is empty");
                     }
                 }
-            });
+            },location);
 
         }
         return view;
+    }
+
+    public void setLocation(String location){
+        this.location=location;
     }
 
 

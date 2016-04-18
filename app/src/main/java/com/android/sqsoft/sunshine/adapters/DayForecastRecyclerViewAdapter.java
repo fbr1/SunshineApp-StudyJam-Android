@@ -66,8 +66,8 @@ public class DayForecastRecyclerViewAdapter extends RecyclerView.Adapter<DayFore
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mIdView = (TextView) view.findViewById(R.id.etCity);
-            mContentView = (TextView) view.findViewById(R.id.etCity);
+            mIdView = (TextView) view.findViewById(R.id.id);
+            mContentView = (TextView) view.findViewById(R.id.content);
         }
 
         @Override

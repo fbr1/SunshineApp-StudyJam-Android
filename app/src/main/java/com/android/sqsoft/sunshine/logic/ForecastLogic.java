@@ -42,10 +42,10 @@ public class ForecastLogic {
     private final Context context;
     public RequestQueue requestQueue;
 
-    public void getExtendedWeather(final ForecastListener listener) {
+    public void getExtendedWeather(final ForecastListener listener,String location) {
 
-        // TODO remove hardcoded city
-        String url = OPENWEATHER_DAILY_URL + "&q=London";
+        // TODO get city from sharedPreferences
+        String url = OPENWEATHER_DAILY_URL + "&q="+ location;
 
         JsonObjectRequest jsObjRequest = new JsonObjectRequest(
                 Request.Method.GET,

@@ -13,6 +13,7 @@ import com.android.sqsoft.sunshine.logic.ForecastLogic;
 
 public class CityForecastActivity extends AppCompatActivity implements ForecastFragment.OnListFragmentInteractionListener{
 
+    public final static String EXTRA_MESSAGE = "com.android.sqsoft.sunshine.CITY";
     private final String TAG = CityForecastActivity.class.getSimpleName();
     private boolean mTwoPane;
     private String mLocation;
@@ -21,10 +22,15 @@ public class CityForecastActivity extends AppCompatActivity implements ForecastF
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // TODO change
-        mLocation = "London";
+        // TODO validar vacio
+        mLocation =  getIntent().getStringExtra(EXTRA_MESSAGE);
 
         setContentView(R.layout.activity_forecast_city);
+
+        ForecastFragment forecastFragment =  ((ForecastFragment)getSupportFragmentManager()
+                .findFragmentById(R.id.fragment_forecast));
+        forecastFragment.setLocation(mLocation);
+
         if (findViewById(R.id.forecast_detail_container) != null) {
             mTwoPane = true;
             if (savedInstanceState == null) {
