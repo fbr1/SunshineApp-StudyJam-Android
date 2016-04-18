@@ -1,5 +1,6 @@
 package com.android.sqsoft.sunshine;
 
+import android.content.Intent;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -62,6 +63,9 @@ public class CityForecastActivity extends AppCompatActivity implements ForecastF
 
     @Override
     public void onListFragmentInteraction(DayForecast item) {
+        Intent intent = new Intent(this, CityForecastDetailActivity.class);
+        intent.putExtra(getString(R.string.day_forecast_for_intent_key), item);
+        startActivity(intent);
 
     }
 }
