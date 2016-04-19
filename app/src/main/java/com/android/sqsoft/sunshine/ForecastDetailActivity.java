@@ -7,7 +7,7 @@ import android.widget.TextView;
 
 import com.android.sqsoft.sunshine.entities.DayForecast;
 
-public class CityForecastDetailActivity extends AppCompatActivity {
+public class ForecastDetailActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

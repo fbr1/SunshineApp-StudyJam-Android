@@ -10,8 +10,8 @@ import java.util.Date;
  */
 public class Utility {
 
-    public static String formatTemperature(double temperature) {
-        return String.format("%1.0f\u00B0", temperature);
+    public static String formatTemperature(Context context, double temperature) {
+        return String.format(context.getString(R.string.format_temperature), temperature);
     }
 
     public static String formatDate(long dateInMilliseconds) {

@@ -13,5 +13,5 @@
         android:layout_marginRight="16dp"
         app:layoutManager="LinearLayoutManager"
         tools:context=".ForecastFragment"
-        tools:listitem="@layout/fragment_forecast" />
+        tools:listitem="@layout/fragment_forecast_item" />
 </LinearLayout>

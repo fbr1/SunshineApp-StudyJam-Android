@@ -1,11 +1,9 @@
 package com.android.sqsoft.sunshine.adapters;
 
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -13,8 +11,6 @@ import com.android.sqsoft.sunshine.ForecastFragment.OnListFragmentInteractionLis
 import com.android.sqsoft.sunshine.R;
 import com.android.sqsoft.sunshine.Utility;
 import com.android.sqsoft.sunshine.entities.DayForecast;
-
-import org.w3c.dom.Text;
 
 import java.text.DateFormat;
 import java.util.List;
@@ -37,7 +33,7 @@ public class DayForecastRecyclerViewAdapter extends RecyclerView.Adapter<DayFore
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_forecast, parent, false);
+                .inflate(R.layout.fragment_forecast_item, parent, false);
         return new ViewHolder(view);
     }
 
@@ -47,8 +43,8 @@ public class DayForecastRecyclerViewAdapter extends RecyclerView.Adapter<DayFore
         holder.mIconView.setImageResource(Utility.getIconResourceForWeatherCondition(holder.mItem.getWeather().get(0).getId()));
         holder.mDateView.setText(DateFormat.getDateInstance().format(holder.mItem.getDate()));
         holder.mDescriptionView.setText(String.valueOf(holder.mItem.getWeather().get(0).getDescription()));
-        holder.mLowTempView.setText(Utility.formatTemperature(holder.mItem.getTmin()));
-        holder.mHighTempView.setText(Utility.formatTemperature(holder.mItem.getTmax()));
+        holder.mLowTempView.setText(Utility.formatTemperature(holder.mView.getContext(),holder.mItem.getTmin()));
+        holder.mHighTempView.setText(Utility.formatTemperature(holder.mView.getContext(),holder.mItem.getTmax()));
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,6 +72,7 @@ public class DayForecastRecyclerViewAdapter extends RecyclerView.Adapter<DayFore
         public final TextView mLowTempView;
 
         public DayForecast mItem;
+
 
         public ViewHolder(View view) {
             super(view);

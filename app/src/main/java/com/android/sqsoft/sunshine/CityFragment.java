@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 
 import com.android.sqsoft.sunshine.adapters.DayForecastRecyclerViewAdapter;
 import com.android.sqsoft.sunshine.entities.DayForecast;
+import com.android.sqsoft.sunshine.logic.CityLogic;
 import com.android.sqsoft.sunshine.logic.ForecastLogic;
 
 import java.util.ArrayList;
@@ -24,20 +25,19 @@ import java.util.List;
  * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
  * interface.
  */
-public class ForecastFragment extends Fragment {
+public class CityFragment extends Fragment {
 
     private static final String TAG = ForecastFragment.class.getSimpleName();
 
     RecyclerView recyclerView;
-    private List<DayForecast> forecastList = new ArrayList<>();
+    private List<String> forecastList = new ArrayList<>();
     private OnListFragmentInteractionListener mListener;
-    private String location;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public ForecastFragment() {
+    public CityFragment() {
     }
 
     public static ForecastFragment newInstance() {
@@ -60,8 +60,9 @@ public class ForecastFragment extends Fragment {
         // Set the adapter
         if (view instanceof RecyclerView) {
             recyclerView = (RecyclerView) view;
+
             // Get data
-            ForecastLogic.getInstance().getExtendedWeather(new ForecastLogic.Listener<ArrayList<DayForecast>>(){
+            CityLogic.getInstance().getExtendedWeather(new ForecastLogic.Listener<ArrayList<DayForecast>>(){
 
                 @Override
                 public void onResult(ArrayList<DayForecast> fl) {
@@ -73,16 +74,15 @@ public class ForecastFragment extends Fragment {
                         Log.d(TAG, "Warning: forecastList is empty");
                     }
                 }
-            },location);
+            });
 
         }
         return view;
     }
 
-    public void setLocation(String location){
-        this.location=location;
-    }
+    public void updateList(String wordPart){
 
+    }
 
     @Override
     public void onAttach(Context context) {

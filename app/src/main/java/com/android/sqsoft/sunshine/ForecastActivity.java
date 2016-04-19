@@ -5,17 +5,13 @@ import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.FrameLayout;
-import android.widget.TextView;
 
 import com.android.sqsoft.sunshine.entities.DayForecast;
-import com.android.sqsoft.sunshine.logic.ForecastLogic;
 
-public class CityForecastActivity extends AppCompatActivity implements ForecastFragment.OnListFragmentInteractionListener{
+public class ForecastActivity extends AppCompatActivity implements ForecastFragment.OnListFragmentInteractionListener{
 
     public final static String EXTRA_MESSAGE = "com.android.sqsoft.sunshine.CITY";
-    private final String TAG = CityForecastActivity.class.getSimpleName();
+    private final String TAG = ForecastActivity.class.getSimpleName();
     private boolean mTwoPane;
     private String mLocation;
 
@@ -63,7 +59,7 @@ public class CityForecastActivity extends AppCompatActivity implements ForecastF
 
     @Override
     public void onListFragmentInteraction(DayForecast item) {
-        Intent intent = new Intent(this, CityForecastDetailActivity.class);
+        Intent intent = new Intent(this, ForecastDetailActivity.class);
         intent.putExtra(getString(R.string.day_forecast_for_intent_key), item);
         startActivity(intent);
 

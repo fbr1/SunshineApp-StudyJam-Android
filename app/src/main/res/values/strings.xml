@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:xliff="http://schemas.android.com/tools">
     <string name="app_name">SunshineApp</string>
     <string name="btn_search">Ver clima</string>
     <string name="tvCity">Ingrese Ciudad</string>
@@ -15,5 +15,8 @@
     <!-- Shared Preferences Default Values -->
     <string name="saved_location_default">London</string>
     <string name="day_forecast_for_intent_key">dayForecastItem</string>
+
+
+    <string name="format_temperature"><xliff:g id="temp">%1.0f</xliff:g>\u00B0</string>
 
 </resources>
