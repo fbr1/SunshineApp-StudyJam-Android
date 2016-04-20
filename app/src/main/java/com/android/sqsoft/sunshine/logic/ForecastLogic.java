@@ -1,18 +1,15 @@
 package com.android.sqsoft.sunshine.logic;
 
 import android.content.Context;
-import android.text.format.Time;
 import android.util.Log;
 
 import com.android.sqsoft.sunshine.BuildConfig;
 import com.android.sqsoft.sunshine.entities.DayForecast;
 import com.android.sqsoft.sunshine.entities.Weather;
-import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.Request;
 import com.android.volley.Response;
-import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -22,9 +19,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-/**
- * Created by Pedro on 11/04/2016.
- */
 public class ForecastLogic extends Logic{
 
     private static final String TAG = ForecastLogic.class.getSimpleName();
@@ -40,11 +34,10 @@ public class ForecastLogic extends Logic{
 
     private static ForecastLogic forecastLogic = null;
 
-
-    public void getExtendedWeather(final Listener listener,String location) {
-
-        // TODO get city from sharedPreferences
-        String url = OPENWEATHER_DAILY_URL + "&q="+ location;
+    public void getExtendedWeatherByCoords(final Listener listener,double latitude,double longitude,boolean useCache) {
+        String url = OPENWEATHER_DAILY_URL +
+                "&lat=" + String.valueOf(latitude) +
+                "&lon=" + String.valueOf(longitude);
 
         JsonObjectRequest jsObjRequest = new JsonObjectRequest(
                 Request.Method.GET,
@@ -53,9 +46,7 @@ public class ForecastLogic extends Logic{
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-
                         listener.onResult(jsonToDayForecastList(response));
-
                     }
                 }, new Response.ErrorListener() {
 
@@ -65,6 +56,8 @@ public class ForecastLogic extends Logic{
                 listener.onResult(null);
             }
         });
+
+        jsObjRequest.setShouldCache(useCache);
 
         addToRequestQueue(jsObjRequest);
     }

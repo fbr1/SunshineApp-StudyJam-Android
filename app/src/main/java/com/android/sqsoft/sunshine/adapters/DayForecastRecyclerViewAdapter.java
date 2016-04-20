@@ -21,7 +21,7 @@ import java.util.List;
  */
 public class DayForecastRecyclerViewAdapter extends RecyclerView.Adapter<DayForecastRecyclerViewAdapter.ViewHolder> {
 
-    private final List<DayForecast> mValues;
+    private List<DayForecast> mValues;
     private final OnListFragmentInteractionListener mListener;
 
     public DayForecastRecyclerViewAdapter(List<DayForecast> items, OnListFragmentInteractionListener listener) {
@@ -56,6 +56,10 @@ public class DayForecastRecyclerViewAdapter extends RecyclerView.Adapter<DayFore
                 }
             }
         });
+    }
+
+    public void updateData(List<DayForecast> forecastList){
+        mValues = forecastList;
     }
 
     @Override

@@ -1,6 +1,11 @@
 package com.android.sqsoft.sunshine;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.pm.ApplicationInfo;
+import android.preference.PreferenceManager;
+
+import com.google.android.gms.maps.model.LatLng;
 
 import java.text.DateFormat;
 import java.util.Date;
@@ -76,5 +81,55 @@ public class Utility {
         }
         return -1;
     }
+    public static boolean isDebuggeable(Context context){
+        return ( 0 != ( context.getApplicationInfo().flags &= ApplicationInfo.FLAG_DEBUGGABLE ) );
+    }
 
+    public static String getLocationName(Context context){
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
+        String defaultValue = context.getResources().getString(R.string.saved_location_default_name_value);
+        return sharedPref.getString(context.getString(R.string.saved_location_name), defaultValue);
+    }
+
+    public static boolean isLocationSet(Context context){
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
+        return sharedPref.getBoolean(context.getString(R.string.saved_location_status), false);
+    }
+
+    public static void saveLocation(Context context,String locationName,LatLng coordinates){
+        SharedPreferences.Editor editor = getSharedPrefEditor(context);
+        editor.putString(context.getString(R.string.saved_location_name),locationName);
+        editor.putLong(context.getString(R.string.saved_location_lat),Double.doubleToRawLongBits(coordinates.latitude));
+        editor.putLong(context.getString(R.string.saved_location_lon),Double.doubleToRawLongBits(coordinates.longitude));
+        editor.putBoolean(context.getString(R.string.saved_location_status),true);
+        editor.apply();
+    }
+
+    public static LatLng getLocationLatLng(Context context){
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
+
+        // Get Default Values
+        Long defaultLat = Long.valueOf(context.getResources().getString(R.string.saved_location_default_lat_value));
+        Long defaultLon = Long.valueOf(context.getResources().getString(R.string.saved_location_default_lon_value));
+
+        // Get Stored Values
+        Double lat = Double.longBitsToDouble(sharedPref.getLong(context.getString(R.string.saved_location_lat),defaultLat));
+        Double lon = Double.longBitsToDouble(sharedPref.getLong(context.getString(R.string.saved_location_lon),defaultLon));
+
+        return new LatLng(lat,lon);
+    }
+
+    public static void clearLocation(Context context){
+        SharedPreferences.Editor editor = getSharedPrefEditor(context);
+        editor.remove(context.getString(R.string.saved_location_name));
+        editor.remove(context.getString(R.string.saved_location_lat));
+        editor.remove(context.getString(R.string.saved_location_lon));
+        editor.remove(context.getString(R.string.saved_location_status));
+        editor.apply();
+    }
+
+    private static SharedPreferences.Editor getSharedPrefEditor(Context context){
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
+        return sharedPref.edit();
+    }
 }

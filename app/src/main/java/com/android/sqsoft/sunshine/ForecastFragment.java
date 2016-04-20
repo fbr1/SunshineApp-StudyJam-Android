@@ -3,8 +3,7 @@ package com.android.sqsoft.sunshine;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,6 +13,7 @@ import android.view.ViewGroup;
 import com.android.sqsoft.sunshine.adapters.DayForecastRecyclerViewAdapter;
 import com.android.sqsoft.sunshine.entities.DayForecast;
 import com.android.sqsoft.sunshine.logic.ForecastLogic;
+import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +31,7 @@ public class ForecastFragment extends Fragment {
     RecyclerView recyclerView;
     private List<DayForecast> forecastList = new ArrayList<>();
     private OnListFragmentInteractionListener mListener;
-    private String location;
+    private SwipeRefreshLayout swipeContainer;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -56,33 +56,63 @@ public class ForecastFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_forecast_list, container, false);
 
-
         // Set the adapter
-        if (view instanceof RecyclerView) {
-            recyclerView = (RecyclerView) view;
-            // Get data
-            ForecastLogic.getInstance().getExtendedWeather(new ForecastLogic.Listener<ArrayList<DayForecast>>(){
+        recyclerView = (RecyclerView)view.findViewById(R.id.list);
+        updateList();
 
-                @Override
-                public void onResult(ArrayList<DayForecast> fl) {
+        // Setup Pull to refresh
+        swipeContainer = (SwipeRefreshLayout)  view.findViewById(R.id.swipeContainer);
 
-                    if(fl != null){
-                        forecastList = fl;
-                        recyclerView.setAdapter(new DayForecastRecyclerViewAdapter(forecastList, mListener));
-                    }else{
-                        Log.d(TAG, "Warning: forecastList is empty");
-                    }
-                }
-            },location);
+        // Start refresh animation on load
+        swipeContainer.post(new Runnable() {
+            @Override public void run() {
+                swipeContainer.setRefreshing(true);
+            }
+        });
 
-        }
+        // Setup refresh listener which triggers new data loading
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+               updateList(false);
+            }
+        });
+
         return view;
     }
 
-    public void setLocation(String location){
-        this.location=location;
+    public void updateList(boolean useCache) {
+
+        // Get City coordinates
+        LatLng coordinates = Utility.getLocationLatLng(getContext());
+
+        // Get data
+        if (recyclerView != null) {
+
+            ForecastLogic.getInstance().getExtendedWeatherByCoords(new ForecastLogic.Listener<ArrayList<DayForecast>>() {
+
+                @Override
+                public void onResult(ArrayList<DayForecast> fl) {
+                    if (fl != null) {
+                        forecastList = fl;
+                        if(recyclerView.getAdapter() == null){
+                            recyclerView.setAdapter(new DayForecastRecyclerViewAdapter(forecastList, mListener));
+                        }else{
+                            ((DayForecastRecyclerViewAdapter)recyclerView.getAdapter()).updateData(forecastList);
+                            recyclerView.getAdapter().notifyDataSetChanged();
+                        }
+                    } else {
+                        Log.d(TAG, "Warning: forecastList is empty");
+                    }
+                    swipeContainer.setRefreshing(false);
+                }
+            }, coordinates.latitude,coordinates.longitude,useCache);
+        }
     }
 
+    public void updateList() {
+        updateList(true);
+    }
 
     @Override
     public void onAttach(Context context) {
