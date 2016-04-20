@@ -30,5 +30,6 @@ public class Logic {
 
     public interface Listener<T> {
         void onResult(T object);
+        void onError(String errorMessage);
     }
 }

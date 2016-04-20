@@ -6,6 +6,8 @@ import android.util.Log;
 import com.android.sqsoft.sunshine.BuildConfig;
 import com.android.sqsoft.sunshine.entities.DayForecast;
 import com.android.sqsoft.sunshine.entities.Weather;
+import com.android.volley.NoConnectionError;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.Request;
@@ -50,11 +52,18 @@ public class ForecastLogic extends Logic{
                     }
                 }, new Response.ErrorListener() {
 
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d(TAG, "Error in JSON response: " + error.getMessage());
-                listener.onResult(null);
-            }
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.e(TAG, "Error in JSON response: " + error.getMessage());
+
+                    String errormessage;
+                    if(error instanceof TimeoutError || error instanceof NoConnectionError){
+                        errormessage = "NO INTERNET CONNECTION";
+                    }else{
+                        errormessage=null;
+                    }
+                    listener.onError(errormessage);
+                }
         });
 
         jsObjRequest.setShouldCache(useCache);
@@ -67,22 +76,30 @@ public class ForecastLogic extends Logic{
         String url = OPENWEATHER_CURRENT_URL + "&q=London";
 
         JsonObjectRequest jsObjRequest = new JsonObjectRequest(
-                Request.Method.GET,
-                url,
-                null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
+            Request.Method.GET,
+            url,
+            null,
+            new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
 
-                        listener.onResult(jsonToDayForecast(response));
+                    listener.onResult(jsonToDayForecast(response));
 
-                    }
-                }, new Response.ErrorListener() {
+                }
+            },
+            new Response.ErrorListener() {
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d(TAG, "Error in JSON response: " + error.getMessage());
-                listener.onResult(null);
+                Log.e(TAG, "Error in JSON response: " + error.getMessage());
+
+                String errormessage;
+                if(error instanceof TimeoutError || error instanceof NoConnectionError){
+                    errormessage = "NO INTERNET CONNECTION";
+                }else{
+                    errormessage=null;
+                }
+                listener.onError(errormessage);
             }
         });
 
@@ -131,7 +148,7 @@ public class ForecastLogic extends Logic{
         dayForecast.setClouds(jsonObject.getDouble("clouds"));
 
         // If rain filed isn't missing
-        if(jsonObject.isNull("rain") == false){
+        if(!jsonObject.isNull("rain")){
             dayForecast.setRain(jsonObject.getDouble("rain"));
         }
 

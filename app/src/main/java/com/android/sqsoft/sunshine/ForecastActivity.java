@@ -1,6 +1,8 @@
 package com.android.sqsoft.sunshine;
 
 import android.content.Intent;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -9,9 +11,11 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.LinearLayout;
 
 import com.android.sqsoft.sunshine.entities.DayForecast;
 import com.android.sqsoft.sunshine.logic.ForecastLogic;
+import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.common.api.Status;
@@ -24,6 +28,7 @@ public class ForecastActivity extends AppCompatActivity implements ForecastFragm
     public final static String EXTRA_MESSAGE = "com.android.sqsoft.sunshine.CITY";
     private static final int PLACE_AUTOCOMPLETE_REQUEST_CODE = 1;
     private final String TAG = ForecastActivity.class.getSimpleName();
+    private LinearLayout parentView;
     private boolean mTwoPane;
 
     @Override
@@ -35,6 +40,8 @@ public class ForecastActivity extends AppCompatActivity implements ForecastFragm
         setContentView(R.layout.activity_forecast_city);
 
         String location = Utility.getLocationName(this);
+
+        parentView = (LinearLayout) findViewById(R.id.layout_container);
 
         // Setup Toolbar
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
@@ -69,6 +76,15 @@ public class ForecastActivity extends AppCompatActivity implements ForecastFragm
                     return true;
                 }
             });
+            MenuItem item2 = menu.add("Show Snackbar");
+            item2.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem item2) {
+                    Snackbar.make(parentView,getString(R.string.default_error_message),Snackbar.LENGTH_LONG).show();
+                    return true;
+                }
+            });
+
         }
 
         return true;
@@ -76,9 +92,6 @@ public class ForecastActivity extends AppCompatActivity implements ForecastFragm
 
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case android.R.id.home:
-                NavUtils.navigateUpFromSameTask(this);
-                return true;
             case R.id.action_changeCity:
                 startCityAutocomplete();
                 return true;
@@ -105,9 +118,12 @@ public class ForecastActivity extends AppCompatActivity implements ForecastFragm
             startActivityForResult(intent, PLACE_AUTOCOMPLETE_REQUEST_CODE);
 
         } catch (GooglePlayServicesRepairableException e) {
-            // TODO: Handle the error.
+
+            // Display dialog prompt to download google play services
+            GoogleApiAvailability googleAPI = GoogleApiAvailability.getInstance();
+            googleAPI.getErrorDialog(this,e.getConnectionStatusCode(),PLACE_AUTOCOMPLETE_REQUEST_CODE).show();
         } catch (GooglePlayServicesNotAvailableException e) {
-            // TODO: Handle the error.
+            Log.e(TAG,e.getMessage());
         }
     }
 
@@ -146,8 +162,8 @@ public class ForecastActivity extends AppCompatActivity implements ForecastFragm
                 Log.d(TAG, "Place: " + place.getName());
             } else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
                 Status status = PlaceAutocomplete.getStatus(this, data);
-                // TODO: Handle the error.
-                Log.d(TAG, status.getStatusMessage());
+                Log.w(TAG, status.getStatusMessage());
+                Snackbar.make(parentView,getString(R.string.default_error_message),Snackbar.LENGTH_SHORT).show();
 
             } else if (resultCode == RESULT_CANCELED) {
                 // The user canceled the operation.

@@ -2,6 +2,7 @@ package com.android.sqsoft.sunshine;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
@@ -9,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.android.sqsoft.sunshine.adapters.DayForecastRecyclerViewAdapter;
 import com.android.sqsoft.sunshine.entities.DayForecast;
@@ -65,7 +67,8 @@ public class ForecastFragment extends Fragment {
 
         // Start refresh animation on load
         swipeContainer.post(new Runnable() {
-            @Override public void run() {
+            @Override
+            public void run() {
                 swipeContainer.setRefreshing(true);
             }
         });
@@ -92,22 +95,43 @@ public class ForecastFragment extends Fragment {
             ForecastLogic.getInstance().getExtendedWeatherByCoords(new ForecastLogic.Listener<ArrayList<DayForecast>>() {
 
                 @Override
-                public void onResult(ArrayList<DayForecast> fl) {
-                    if (fl != null) {
-                        forecastList = fl;
-                        if(recyclerView.getAdapter() == null){
-                            recyclerView.setAdapter(new DayForecastRecyclerViewAdapter(forecastList, mListener));
-                        }else{
-                            ((DayForecastRecyclerViewAdapter)recyclerView.getAdapter()).updateData(forecastList);
-                            recyclerView.getAdapter().notifyDataSetChanged();
-                        }
-                    } else {
+                public void onResult(ArrayList<DayForecast> forecastList) {
+
+                    setDataInAdapter(forecastList);
+
+                    if (forecastList.isEmpty()) {
                         Log.d(TAG, "Warning: forecastList is empty");
                     }
-                    swipeContainer.setRefreshing(false);
+
                 }
+
+                @Override
+                public void onError(String errorMessage) {
+                    if(errorMessage== null){
+                        Snackbar.make(getView(),getString(R.string.default_error_message),Snackbar.LENGTH_LONG).show();
+                    }else{
+                        Snackbar.make(getView(),errorMessage,Snackbar.LENGTH_LONG).show();
+                    }
+                    setDataInAdapter(new ArrayList<DayForecast>());
+                }
+
             }, coordinates.latitude,coordinates.longitude,useCache);
         }
+    }
+
+    private void setDataInAdapter(ArrayList<DayForecast> forecastList){
+        if(recyclerView.getAdapter() == null){
+            recyclerView.setAdapter(new DayForecastRecyclerViewAdapter(forecastList, mListener));
+        }else{
+            ((DayForecastRecyclerViewAdapter)recyclerView.getAdapter()).updateData(forecastList);
+            recyclerView.getAdapter().notifyDataSetChanged();
+        }
+        swipeContainer.post(new Runnable() {
+            @Override
+            public void run() {
+                swipeContainer.setRefreshing(false);
+            }
+        });
     }
 
     public void updateList() {
@@ -136,10 +160,6 @@ public class ForecastFragment extends Fragment {
      * fragment to allow an interaction in this fragment to be communicated
      * to the activity and potentially other fragments contained in that
      * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnListFragmentInteractionListener {
         void onListFragmentInteraction(DayForecast item);
