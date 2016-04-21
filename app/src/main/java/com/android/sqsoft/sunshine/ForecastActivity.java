@@ -1,9 +1,9 @@
 package com.android.sqsoft.sunshine;
 
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 
 import com.android.sqsoft.sunshine.entities.DayForecast;
 import com.android.sqsoft.sunshine.logic.ForecastLogic;
+import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
@@ -22,7 +23,6 @@ import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.places.AutocompleteFilter;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocomplete;
-import com.google.gson.Gson;
 
 public class ForecastActivity extends AppCompatActivity implements ForecastFragment.OnListFragmentInteractionListener {
 
@@ -56,12 +56,14 @@ public class ForecastActivity extends AppCompatActivity implements ForecastFragm
             mTwoPane = true;
             if (savedInstanceState == null) {
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.forecast_detail_container, new DetailFragment())
+                        .add(R.id.forecast_detail_container, new DetailFragment())
                         .commit();
             }
         } else {
             mTwoPane = false;
         }
+
+        checkPlayServices();
 
     }
 
@@ -119,13 +121,38 @@ public class ForecastActivity extends AppCompatActivity implements ForecastFragm
             startActivityForResult(intent, PLACE_AUTOCOMPLETE_REQUEST_CODE);
 
         } catch (GooglePlayServicesRepairableException e) {
-
-            // Display dialog prompt to download google play services
-            GoogleApiAvailability googleAPI = GoogleApiAvailability.getInstance();
-            googleAPI.getErrorDialog(this,e.getConnectionStatusCode(),PLACE_AUTOCOMPLETE_REQUEST_CODE).show();
+            Log.i(TAG,e.getMessage());
         } catch (GooglePlayServicesNotAvailableException e) {
             Log.e(TAG,e.getMessage());
         }
+    }
+
+    private boolean checkPlayServices() {
+        GoogleApiAvailability apiAvailability = GoogleApiAvailability.getInstance();
+        int resultCode = apiAvailability.isGooglePlayServicesAvailable(this);
+        if (resultCode != ConnectionResult.SUCCESS) {
+            if (apiAvailability.isUserResolvableError(resultCode)) {
+
+                Dialog dialog = apiAvailability.getErrorDialog(this, resultCode, PLACE_AUTOCOMPLETE_REQUEST_CODE);
+
+                // Exit app if dialog cancelled
+                dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface dialogInterface) {
+                        finish();
+                    }
+                });
+
+                dialog.show();
+
+            } else {
+                Log.i(TAG, "This device is not supported.");
+                Snackbar.make(parentView,getString(R.string.not_supported_error),Snackbar.LENGTH_SHORT).show();
+                finish();
+            }
+            return false;
+        }
+        return true;
     }
 
     @Override
@@ -133,8 +160,7 @@ public class ForecastActivity extends AppCompatActivity implements ForecastFragm
         if (mTwoPane) {
             DetailFragment detailFragment = new DetailFragment();
             Bundle bundle = new Bundle();
-
-            bundle.putString("item", new Gson().toJson(item));
+            bundle.putParcelable("dayForecast",item);
             detailFragment.setArguments(bundle);
 
             getSupportFragmentManager().beginTransaction().replace(R.id.forecast_detail_container,detailFragment).commit();

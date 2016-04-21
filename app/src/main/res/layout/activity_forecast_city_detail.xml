@@ -17,10 +17,13 @@
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
-    <TextView
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/forecast_detail_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/tv_Detail"
-        android:text="Placeholder"/>
+        android:layout_height="match_parent"
+        tools:context="com.android.sqsoft.sunshine.ForecastDetailActivity" />
+
+
 
 </LinearLayout>

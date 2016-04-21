@@ -4,19 +4,12 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.android.sqsoft.sunshine.entities.DayForecast;
-import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-
-import java.io.Console;
-
 
 /**
  * A simple {@link Fragment} subclass.
@@ -37,19 +30,9 @@ public class DetailFragment extends Fragment {
         this.setArguments(new Bundle());
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment DetailFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static DetailFragment newInstance(String param1, String param2) {
-        DetailFragment fragment = new DetailFragment();
 
-        return fragment;
+        return new DetailFragment();
     }
 
     @Override
@@ -63,11 +46,13 @@ public class DetailFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_detail, container, false);
 
-        DayForecast dayForecast = (new Gson()).fromJson(getArguments().getString("item"),DayForecast.class);
-        if (dayForecast!=null) {
-            ((TextView)view.findViewById(R.id.tv)).setText(String.valueOf(dayForecast.getDate()));
-        } else {
-            ((TextView)view.findViewById(R.id.tv)).setText("Seleccione un dia");
+        Bundle bundle = getArguments();
+
+        if(bundle != null){
+            DayForecast dayForecast =  bundle.getParcelable("dayForecast");
+            if(dayForecast != null){
+                ((TextView)view.findViewById(R.id.tv)).setText(String.valueOf(dayForecast.getDate()));
+            }
         }
         return view;
     }
