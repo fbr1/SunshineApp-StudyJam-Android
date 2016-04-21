@@ -6,6 +6,7 @@ import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
 
 import com.android.sqsoft.sunshine.entities.DayForecast;
+import com.google.gson.Gson;
 
 public class ForecastDetailActivity extends AppCompatActivity {
 
@@ -15,11 +16,15 @@ public class ForecastDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_forecast_city_detail);
         DayForecast dayForecast =(DayForecast) getIntent().getSerializableExtra(getString(R.string.day_forecast_for_intent_key));
 
-        TextView textView =  (TextView) findViewById(R.id.tv_Detail);
-        textView.setText("Minimum Temperature: " + String.valueOf(dayForecast.getTmin()));
-
         String location = Utility.getLocationName(this);
 
+        DetailFragment detailFragment = new DetailFragment();
+        Bundle bundle = new Bundle();
+
+        bundle.putString("item", new Gson().toJson(dayForecast));
+        detailFragment.setArguments(bundle);
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.container,detailFragment).commit();
         // Setup Toolbar
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         if (myToolbar != null) {

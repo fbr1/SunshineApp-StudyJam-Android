@@ -22,6 +22,7 @@ import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.places.AutocompleteFilter;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocomplete;
+import com.google.gson.Gson;
 
 public class ForecastActivity extends AppCompatActivity implements ForecastFragment.OnListFragmentInteractionListener {
 
@@ -55,7 +56,7 @@ public class ForecastActivity extends AppCompatActivity implements ForecastFragm
             mTwoPane = true;
             if (savedInstanceState == null) {
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.forecast_detail_container, new DetailFragment())
+                        .add(R.id.forecast_detail_container, new DetailFragment())
                         .commit();
             }
         } else {
@@ -129,9 +130,20 @@ public class ForecastActivity extends AppCompatActivity implements ForecastFragm
 
     @Override
     public void onListFragmentInteraction(DayForecast item) {
-        Intent intent = new Intent(this, ForecastDetailActivity.class);
-        intent.putExtra(getString(R.string.day_forecast_for_intent_key), item);
-        startActivity(intent);
+        if (mTwoPane) {
+            DetailFragment detailFragment = new DetailFragment();
+            Bundle bundle = new Bundle();
+
+            bundle.putString("item", new Gson().toJson(item));
+            detailFragment.setArguments(bundle);
+
+            getSupportFragmentManager().beginTransaction().replace(R.id.forecast_detail_container,detailFragment).commit();
+        } else {
+            Intent intent = new Intent(this, ForecastDetailActivity.class);
+            intent.putExtra(getString(R.string.day_forecast_for_intent_key), item);
+            startActivity(intent);
+        }
+
 
     }
 
