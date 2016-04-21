@@ -60,7 +60,6 @@ public class ForecastFragment extends Fragment {
 
         // Set the adapter
         recyclerView = (RecyclerView)view.findViewById(R.id.list);
-        updateList();
 
         // Setup Pull to refresh
         swipeContainer = (SwipeRefreshLayout)  view.findViewById(R.id.swipeContainer);
@@ -80,6 +79,8 @@ public class ForecastFragment extends Fragment {
                updateList(false);
             }
         });
+
+        updateList();
 
         return view;
     }
