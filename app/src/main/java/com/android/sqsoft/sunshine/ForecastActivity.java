@@ -56,7 +56,7 @@ public class ForecastActivity extends AppCompatActivity implements ForecastFragm
             mTwoPane = true;
             if (savedInstanceState == null) {
                 getSupportFragmentManager().beginTransaction()
-                        .add(R.id.forecast_detail_container, new DetailFragment())
+                        .replace(R.id.forecast_detail_container, new DetailFragment())
                         .commit();
             }
         } else {
@@ -143,7 +143,6 @@ public class ForecastActivity extends AppCompatActivity implements ForecastFragm
             intent.putExtra(getString(R.string.day_forecast_for_intent_key), item);
             startActivity(intent);
         }
-
 
     }
 
