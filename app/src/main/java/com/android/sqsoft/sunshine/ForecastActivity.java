@@ -53,11 +53,6 @@ public class ForecastActivity extends AppCompatActivity implements ForecastFragm
         // Determine layout
         if (findViewById(R.id.forecast_detail_container) != null) {
             mTwoPane = true;
-            if (savedInstanceState == null) {
-                getSupportFragmentManager().beginTransaction()
-                        .add(R.id.forecast_detail_container, new DetailFragment())
-                        .commit();
-            }
         } else {
             mTwoPane = false;
         }

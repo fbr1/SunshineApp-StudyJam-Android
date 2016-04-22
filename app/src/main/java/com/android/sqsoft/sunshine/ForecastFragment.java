@@ -17,7 +17,6 @@ import com.android.sqsoft.sunshine.logic.ForecastLogic;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * A fragment representing a list of Items.
@@ -30,7 +29,6 @@ public class ForecastFragment extends Fragment {
     private static final String TAG = ForecastFragment.class.getSimpleName();
 
     RecyclerView recyclerView;
-    private List<DayForecast> forecastList = new ArrayList<>();
     private OnListFragmentInteractionListener mListener;
     private SwipeRefreshLayout swipeContainer;
 
