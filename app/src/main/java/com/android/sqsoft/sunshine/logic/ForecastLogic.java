@@ -23,6 +23,7 @@ import java.util.List;
 
 public class ForecastLogic extends Logic{
 
+    // Contants
     private static final String TAG = ForecastLogic.class.getSimpleName();
     private static final String OPENWEATHER_API_KEY = BuildConfig.OPEN_WEATHER_API_KEY;
     private static final String OPENWEATHER_UNIT = "metric";
@@ -33,24 +34,40 @@ public class ForecastLogic extends Logic{
             OPENWEATHER_LIST_SIZE + "&appid=" + OPENWEATHER_API_KEY;
     private static final String OPENWEATHER_CURRENT_URL = OPENWEATHER_BASE_URL + "weather?units=" +
             OPENWEATHER_UNIT + "&appid=" + OPENWEATHER_API_KEY;
+    private static final long CACHE_LIFE = 60000; // 1 minute
+
+    // Variables
+
+    private double lastLat = 0;
+    private double lastLon = 0;
+    private long lastRequest = 0;
+    private List<DayForecast> lastForecastL;
 
     private static ForecastLogic forecastLogic = null;
 
-    public void getExtendedWeatherByCoords(final Listener listener,double latitude,double longitude,boolean useCache) {
+    public void getExtendedWeatherByCoords(final Listener listener, final double latitude, final double longitude, boolean useCache) {
         String url = OPENWEATHER_DAILY_URL +
                 "&lat=" + String.valueOf(latitude) +
                 "&lon=" + String.valueOf(longitude);
 
-        JsonObjectRequest jsObjRequest = new JsonObjectRequest(
-                Request.Method.GET,
-                url,
-                null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        listener.onResult(jsonToDayForecastList(response));
-                    }
-                }, new Response.ErrorListener() {
+        if(isCacheValid(latitude,longitude) && useCache){
+            listener.onResult(lastForecastL);
+        }else{
+            JsonObjectRequest jsObjRequest = new JsonObjectRequest(
+                    Request.Method.GET,
+                    url,
+                    null,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            List<DayForecast> forecastList = jsonToDayForecastList(response);
+
+                            storeToCache(forecastList,latitude,longitude);
+
+                            listener.onResult(forecastList);
+
+                        }
+                    }, new Response.ErrorListener() {
 
                 @Override
                 public void onErrorResponse(VolleyError error) {
@@ -64,11 +81,14 @@ public class ForecastLogic extends Logic{
                     }
                     listener.onError(errormessage);
                 }
-        });
+            });
 
-        jsObjRequest.setShouldCache(useCache);
+            jsObjRequest.setShouldCache(useCache);
 
-        addToRequestQueue(jsObjRequest);
+            addToRequestQueue(jsObjRequest);
+        }
+
+
     }
 
     public void getCurrentWeather(final Listener listener) {
@@ -104,6 +124,29 @@ public class ForecastLogic extends Logic{
         });
 
         addToRequestQueue(jsObjRequest);
+    }
+
+    private boolean isCacheValid(Double lat,Double lon){
+        Long time = System.currentTimeMillis();
+        if(lat == lastLat && lon == lastLon){
+            if( time - lastRequest < CACHE_LIFE){
+                return true;
+            }
+        }
+
+        // Set last request to current one
+        lastLat = lat;
+        lastLon = lon;
+        lastRequest = time;
+
+        return false;
+    }
+
+    private void storeToCache(List<DayForecast> forecastList,double lat, double lon){
+        lastForecastL = forecastList;
+        lastLat = lat;
+        lastLon = lon;
+        lastRequest =  System.currentTimeMillis();
     }
 
     private List<DayForecast> jsonToDayForecastList(JSONObject response) {

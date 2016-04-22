@@ -1,11 +1,9 @@
 package com.android.sqsoft.sunshine.entities;
 
-import java.io.Serializable;
+import android.os.Parcel;
+import android.os.Parcelable;
 
-/**
- * Created by fbr1 on 13/04/16.
- */
-public class Weather extends Entity{
+public class Weather implements Parcelable {
 
     private int id;
     private String name;
@@ -35,4 +33,36 @@ public class Weather extends Entity{
         this.description = description;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.id);
+        dest.writeString(this.name);
+        dest.writeString(this.description);
+    }
+
+    public Weather() {
+    }
+
+    protected Weather(Parcel in) {
+        this.id = in.readInt();
+        this.name = in.readString();
+        this.description = in.readString();
+    }
+
+    public static final Parcelable.Creator<Weather> CREATOR = new Parcelable.Creator<Weather>() {
+        @Override
+        public Weather createFromParcel(Parcel source) {
+            return new Weather(source);
+        }
+
+        @Override
+        public Weather[] newArray(int size) {
+            return new Weather[size];
+        }
+    };
 }

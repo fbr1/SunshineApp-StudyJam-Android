@@ -1,12 +1,12 @@
 package com.android.sqsoft.sunshine.entities;
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-/**
- * Created by Pedro on 10/04/2016.
- */
-public class DayForecast extends Entity {
+public class DayForecast implements Parcelable {
 
 
     private Date date;
@@ -127,4 +127,60 @@ public class DayForecast extends Entity {
         this.currentTemp = currentTemp;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(date != null ? date.getTime() : -1);
+        dest.writeDouble(this.currentTemp);
+        dest.writeDouble(this.tmin);
+        dest.writeDouble(this.tmax);
+        dest.writeDouble(this.humidity);
+        dest.writeDouble(this.pressure);
+        dest.writeList(this.weather);
+        dest.writeDouble(this.windSpeed);
+        dest.writeDouble(this.windDir);
+        dest.writeDouble(this.clouds);
+        dest.writeDouble(this.rain);
+        dest.writeLong(sunset != null ? sunset.getTime() : -1);
+        dest.writeLong(sunrise != null ? sunrise.getTime() : -1);
+    }
+
+    public DayForecast() {
+    }
+
+    protected DayForecast(Parcel in) {
+        long tmpDate = in.readLong();
+        this.date = tmpDate == -1 ? null : new Date(tmpDate);
+        this.currentTemp = in.readDouble();
+        this.tmin = in.readDouble();
+        this.tmax = in.readDouble();
+        this.humidity = in.readDouble();
+        this.pressure = in.readDouble();
+        this.weather = new ArrayList<Weather>();
+        in.readList(this.weather, Weather.class.getClassLoader());
+        this.windSpeed = in.readDouble();
+        this.windDir = in.readDouble();
+        this.clouds = in.readDouble();
+        this.rain = in.readDouble();
+        long tmpSunset = in.readLong();
+        this.sunset = tmpSunset == -1 ? null : new Date(tmpSunset);
+        long tmpSunrise = in.readLong();
+        this.sunrise = tmpSunrise == -1 ? null : new Date(tmpSunrise);
+    }
+
+    public static final Parcelable.Creator<DayForecast> CREATOR = new Parcelable.Creator<DayForecast>() {
+        @Override
+        public DayForecast createFromParcel(Parcel source) {
+            return new DayForecast(source);
+        }
+
+        @Override
+        public DayForecast[] newArray(int size) {
+            return new DayForecast[size];
+        }
+    };
 }

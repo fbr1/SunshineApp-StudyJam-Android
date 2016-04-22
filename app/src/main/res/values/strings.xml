@@ -21,9 +21,7 @@
     <string name="saved_location_default_lat_value">4632445832507001935</string>
     <string name="saved_location_default_lon_value">-4629601038706052480</string>
     <string name="saved_location_default_name_value">London</string>
-
-
-
+    <string name="not_supported_error">Device not supported</string>
 
 
 </resources>
