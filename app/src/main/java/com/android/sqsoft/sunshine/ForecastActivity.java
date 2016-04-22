@@ -26,7 +26,6 @@ import com.google.android.gms.location.places.ui.PlaceAutocomplete;
 
 public class ForecastActivity extends AppCompatActivity implements ForecastFragment.OnListFragmentInteractionListener {
 
-    public final static String EXTRA_MESSAGE = "com.android.sqsoft.sunshine.CITY";
     private static final int PLACE_AUTOCOMPLETE_REQUEST_CODE = 1;
     private final String TAG = ForecastActivity.class.getSimpleName();
     private LinearLayout parentView;

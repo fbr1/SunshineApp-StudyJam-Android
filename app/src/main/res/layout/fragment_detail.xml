@@ -10,182 +10,182 @@
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical"
         tools:context="com.android.sqsoft.sunshine.DetailFragment">
 
-        <!-- TODO: Update blank fragment layout -->
         <TextView
+            android:id="@+id/tvDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Fecha"
-            android:id="@+id/tvDate"
-            android:textStyle="italic"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal"
             android:layout_marginTop="10dp"
-            android:layout_gravity="center_horizontal" />
+            android:text="@string/data_placeholder"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textStyle="italic" />
 
         <LinearLayout
+            android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_below="@+id/tvDate"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:id="@+id/linearLayout">
+            android:orientation="horizontal">
 
 
             <ImageView
+                android:id="@+id/ivWeatherImage"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:id="@+id/ivWeatherImage"
                 android:src="@drawable/art_clear" />
 
 
             <LinearLayout
-                android:orientation="vertical"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="43dp"
                 android:layout_weight="1"
 
-                android:layout_marginTop="43dp"
-                android:id="@+id/lyClima"
-                android:gravity="center|center_horizontal">
+                android:gravity="center|center_horizontal"
+                android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/tvWeatherName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="Soleado"
-                    android:id="@+id/tvNombreClima"
-
-                    />
+                    android:text="@string/data_placeholder"
+                    android:textAppearance="?android:attr/textAppearanceLarge" />
 
                 <TextView
+                    android:id="@+id/tvWeatherDescription"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Muy soleado"
-                    android:id="@+id/tvDescripcionClima"
-                    />
+                    android:text="@string/data_placeholder"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
             </LinearLayout>
-            <FrameLayout
-                android:id="@+id/container_current_temp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
 
-            </FrameLayout>
             <LinearLayout
-                android:orientation="vertical"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:id="@+id/lyTemp"
-                android:gravity="center|center_horizontal">>
+                android:gravity="center|center_horizontal"
+                android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/tvTmax"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="@string/data_placeholder"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="20°"
-                    android:id="@+id/tvTmax"
                     android:textStyle="bold" />
 
                 <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="10°"
-                        android:id="@+id/tvTmin"/>
+                    android:id="@+id/tvTmin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/data_placeholder"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
             </LinearLayout>
 
 
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <TextView
+                android:id="@+id/tvLabelPressure"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:layout_marginStart="24dp"
+                android:text="@string/lbl_pressure"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Presión:"
-                android:id="@+id/tvLabelPresion"
-                android:textStyle="bold"
-                android:layout_marginLeft="@dimen/abc_action_bar_content_inset_material" />
+                android:textStyle="bold" />
+
             <TextView
+                android:id="@+id/tvPressure"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="1032 Pa"
-                android:id="@+id/tvPresión"
-                android:layout_marginLeft="@dimen/abc_action_bar_content_inset_material" />
+                android:layout_marginLeft="@dimen/abc_action_bar_content_inset_material"
+                android:layout_marginStart="@dimen/abc_action_bar_content_inset_material"
+                android:text="@string/data_placeholder"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <TextView
+                android:id="@+id/tvLabelHumidity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/abc_action_bar_content_inset_material"
+                android:layout_marginStart="@dimen/abc_action_bar_content_inset_material"
+                android:text="@string/lbl_humidity"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Humedad:"
-                android:id="@+id/tvLabelHumedad"
-                android:textStyle="bold"
-                android:layout_marginLeft="@dimen/abc_action_bar_content_inset_material" />
+                android:textStyle="bold" />
+
             <TextView
+                android:id="@+id/tvHumidity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/abc_action_bar_content_inset_material"
+                android:layout_marginStart="@dimen/abc_action_bar_content_inset_material"
+                android:text="@string/data_placeholder"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tvLabelClouds"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/abc_action_bar_content_inset_material"
+                android:layout_marginStart="@dimen/abc_action_bar_content_inset_material"
+                android:text="@string/lbl_clouds"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="94%"
-                android:id="@+id/tvHumedad"
-                android:layout_marginLeft="@dimen/abc_action_bar_content_inset_material" />
-        </LinearLayout><LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Nublado:"
-            android:id="@+id/tvLabelNublado"
-            android:textStyle="bold"
-            android:layout_marginLeft="@dimen/abc_action_bar_content_inset_material" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="84%"
-            android:id="@+id/tvNublado"
-            android:layout_marginLeft="@dimen/abc_action_bar_content_inset_material" />
-    </LinearLayout><LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Probabilidad de lluvia:"
-            android:id="@+id/tvLabelLluvia"
-            android:textStyle="bold"
-            android:layout_marginLeft="@dimen/abc_action_bar_content_inset_material" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="30%"
-            android:id="@+id/tvLluvia"
-            android:layout_marginLeft="@dimen/abc_action_bar_content_inset_material" />
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvClouds"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/abc_action_bar_content_inset_material"
+                android:layout_marginStart="@dimen/abc_action_bar_content_inset_material"
+                android:text="@string/data_placeholder"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tvLabelRain"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/abc_action_bar_content_inset_material"
+                android:layout_marginStart="@dimen/abc_action_bar_content_inset_material"
+                android:text="@string/lbl_rain_probability"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvRain"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/abc_action_bar_content_inset_material"
+                android:layout_marginStart="@dimen/abc_action_bar_content_inset_material"
+                android:text="@string/data_placeholder"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+        </LinearLayout>
     </LinearLayout>
-    </LinearLayout>
-
-
-
-
-        //Poner imagen Temperatura maxima y minima
-
 </android.support.v7.widget.CardView>
 
 
