@@ -28,7 +28,7 @@ public class ForecastDetailActivity extends AppCompatActivity {
         // Setup Toolbar
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         if (myToolbar != null) {
-            myToolbar.setTitle(location + " - Detalle");
+            myToolbar.setTitle(location + " - Detail");
             setSupportActionBar(myToolbar);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
