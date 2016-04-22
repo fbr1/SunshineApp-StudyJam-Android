@@ -29,7 +29,7 @@ public class DayForecast extends Entity {
 
     public void setDate(Date date) {
         this.date = date;
-    }
+        }
 
     public double getTmin() {
         return tmin;

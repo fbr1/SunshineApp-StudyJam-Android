@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.sqsoft.sunshine.entities.DayForecast;
@@ -65,19 +66,27 @@ public class DetailFragment extends Fragment {
 
         DayForecast dayForecast = (new Gson()).fromJson(getArguments().getString("item"),DayForecast.class);
         if (dayForecast!=null) {
-            ((TextView)view.findViewById(R.id.tv)).setText(String.valueOf(dayForecast.getDate()));
+            setViews(view, dayForecast);
         } else {
-            ((TextView)view.findViewById(R.id.tv)).setText("Seleccione un dia");
+
         }
         return view;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
+    private void setViews(View view, DayForecast dayForecast) {
+        ((ImageView)view.findViewById(R.id.ivWeatherImage)).setImageResource(Utility.getArtResourceForWeatherCondition(dayForecast.getWeather().get(0).getId()));
+        String dateStr = String.valueOf(dayForecast.getDate()).substring(0,10);
+        ((TextView)view.findViewById(R.id.tvDate)).setText(dateStr);
+        ((TextView)view.findViewById(R.id.tvNombreClima)).setText(String.valueOf(dayForecast.getWeather().get(0).getName()));
+        ((TextView)view.findViewById(R.id.tvDescripcionClima)).setText(String.valueOf(dayForecast.getWeather().get(0).getDescription()));
+        ((TextView)view.findViewById(R.id.tvTmax)).setText(String.valueOf(dayForecast.getTmax())+"°C");
+        ((TextView)view.findViewById(R.id.tvTmin)).setText(String.valueOf(dayForecast.getTmin())+"°C");
+        ((TextView)view.findViewById(R.id.tvPresión)).setText(String.valueOf(dayForecast.getPressure())+" Pa");
+        ((TextView)view.findViewById(R.id.tvHumedad)).setText(String.valueOf(dayForecast.getHumidity())+"%");
+        ((TextView)view.findViewById(R.id.tvNublado)).setText(String.valueOf(dayForecast.getClouds())+"%");
+        ((TextView)view.findViewById(R.id.tvLluvia)).setText(String.valueOf(dayForecast.getRain())+"%");
     }
+
 
     @Override
     public void onAttach(Context context) {
@@ -101,10 +110,6 @@ public class DetailFragment extends Fragment {
      * fragment to allow an interaction in this fragment to be communicated
      * to the activity and potentially other fragments contained in that
      * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
